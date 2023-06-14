@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Taisiya Bogatyreva](https://up.htmlacademy.ru/javascript/29/user/2244991).
-* Наставник: `Антон Попов`.
+* Наставник: `Антон`.
 
 ---
 
