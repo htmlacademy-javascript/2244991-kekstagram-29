@@ -1,7 +1,7 @@
 /**Функция для проверки длины строки
-@param {string} text - изначальная строка
-@param {number} maxLength - максимум символов в строке для проверки
-@return {boolean} - истина если строка меньше максимальной длины
+*@param {string} text - изначальная строка
+*@param {number} maxLength - максимум символов в строке для проверки
+*@return {boolean} - истина если строка меньше максимальной длины
 */
 function checkStringlength(text, maxLength = 150) {
   return text.length <= maxLength;
@@ -10,8 +10,8 @@ function checkStringlength(text, maxLength = 150) {
 checkStringlength('проверяемая строка', 20);
 
 /**Функция для проверки, является ли строка палиндромом
-@param {string} string - строка для проверки
-@return {boolean} - true если переверонутая строка совпадает с исходной
+*@param {string} string - строка для проверки
+*@return {boolean} - true если переверонутая строка совпадает с исходной
 */
 function testPalindrome(string) {
   string = string.toLowerCase().replaceAll(' ', '');
