@@ -3,9 +3,8 @@
 *@param {number} maxLength - максимум символов в строке для проверки
 *@return {boolean} - истина если строка меньше максимальной длины
 */
-function checkStringlength(text, maxLength = 150) {
-  return text.length <= maxLength;
-}
+const checkStringlength = (text, maxLength = 150) =>
+  text.length <= maxLength;
 
 checkStringlength('проверяемая строка', 20);
 
@@ -13,7 +12,7 @@ checkStringlength('проверяемая строка', 20);
 *@param {string} string - строка для проверки
 *@return {boolean} - true если переверонутая строка совпадает с исходной
 */
-function testPalindrome(string) {
+const testPalindrome = (string) => {
   string = string.toLowerCase().replaceAll(' ', '');
   let string2 = '';
 
@@ -22,7 +21,7 @@ function testPalindrome(string) {
   }
 
   return string === string2;
-}
+};
 
 testPalindrome('топот');
 
@@ -30,11 +29,11 @@ testPalindrome('топот');
  * @param {string} number - строка
  * @return {number} - целое положительное число, если в строке нет ни одной цифры, функция должна вернуть NaN
 */
-function letOnlyNumber(number) {
+const letOnlyNumber = (number) => {
   number = number.replace(/[^\d]/gi, '');
   const i = parseFloat(number);
   return (i);
-}
+};
 
 letOnlyNumber('ECMAScript 2022');
 
@@ -46,7 +45,7 @@ letOnlyNumber('ECMAScript 2022');
  * @return - исходную строку дополненную добавочными символами до указанной длины
  */
 
-function makeAdressFile(string, minLength, symbolString) {
+const makeAdressFile = (string, minLength, symbolString) => {
 
   while (string.length < minLength) {
     if (string.length + symbolString.length > minLength) {
@@ -55,6 +54,6 @@ function makeAdressFile(string, minLength, symbolString) {
     string = symbolString + string;
   }
   return(string);
-}
+};
 
 makeAdressFile('q', 4, 'werty');
