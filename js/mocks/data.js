@@ -1,7 +1,11 @@
-const AVATAR_COUNT = 6;
+import { generateRandomNumber, getRandomElementFromArray } from './util.js';
+
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
 const COMMENT_COUNT = 30;
+const PICTURES_COUNT = 25;
+const AVATAR_COUNT = 6;
+
 const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -33,54 +37,11 @@ const DISCRIPTIONS = [
 ];
 
 /**
- * функция по генерации случайного числа
- * @param {number} start с какого числа начинаем генерацию чистел
- * @param {number} end на каком останавливаем генерацию
- * @return {number} случайное число
- */
-const generateRandomNumber = (start, end) => {
-  const randomNumber = Math.floor(Math.random() * (end - start + 1)) + start;
-  return randomNumber;
-};
-
-// /**
-//  * функция по генерации уникального id который не повторяется
-//  * @param {number} start минимальное число c которого начинаем генерацию
-//  * @param {number} end максимальное число на котором останавливаем генерацию
-//  * @return {number} уникальное число, которое мы проверили циклом
-//  */
-// const generateIDNumber = (start, end) => {
-//   const previousValues = [];
-
-//   return function () {
-//     let currentValue = generateRandomNumber(start, end); //Получить случайное целое положительное число
-//     while (previousValues.includes(currentValue)) {//Проверяем уникальность циклом while
-//       currentValue = generateRandomNumber(start, end);
-//     }
-//     previousValues.push(currentValue); //Запомнить полученное число
-//     return currentValue; //Вернуть результат
-//   };
-// };
-// const generatePhotoID = generateIDNumber(1, 25);
-// generatePhotoID();
-
-/**
- * функция берет массив и случайным образом выбирает элемент массива
- * @param {Array} arr массив сообщений
- * @return {string} строку массива, выбранную в случайном порядке
- */
-
-const getRandomElementFromArray = (arr) => {
-  const randomIndex = generateRandomNumber(0, arr.length - 1);
-  return arr[randomIndex];
-};
-
-/**
  * функция по генерации одного комментария
  * @return {object} объект комментария
  */
-const generateComment = () => ({
-  id: generateRandomNumber(1, 1000), //два параметра от 1 до 1000, функция случайным образом выбирает число методом
+const generateComment = (index) => ({
+  id: index, //генерируем уникальные id
   avatar: `img/avatar-${generateRandomNumber(1, AVATAR_COUNT)}.svg`,
   message: getRandomElementFromArray(MESSAGES),//фукнция берет массив сообщений и случайным образом выбирает элемент массива
   name: getRandomElementFromArray(NAMES),//фукнция берет массив имен и случайным образом выбирает элемент массива
@@ -91,19 +52,15 @@ const generateComment = () => ({
  * @param {number} count количество комментариев, которые нужно сгенерировать
  * @return {Array} массив объектов комментариев
  */
-const generateComments = (count) => {
-  const comments = [];
-  for (let i = 0; i < count; i++) {
-    comments.push(generateComment());
-  }
-  return comments;
-};
+const generateComments = () => Array.from(
+  { length: COMMENT_COUNT },
+  (_, pictureIndex) => generateComment(pictureIndex + 1));
 
 /**
  * функция по генерации одной фотографии
  * @return {object} объект комментария
  */
-const generatePhoto = function (index) {
+const generatePhoto = function (index) { //генерируем уникальные id url по индексу
   return {
     id: index,
     url: `photos/${index}.jpg`,
@@ -118,12 +75,8 @@ const generatePhoto = function (index) {
  * @param {number} count количество фотографий, которые нужно сгенерировать
  * @return {Array} массив объектов фотографий
  */
-const generatePhotos = (count) => {
-  const photos = [];
-  for (let i = 0; i < count; i++) {
-    photos.push(generatePhoto());
-  }
-  return photos;
-};
+const generatePhotos = () =>Array.from(
+  { length: PICTURES_COUNT },
+  (_, pictureIndex) => generatePhoto(pictureIndex + 1));
 
-export { generatePhotos, generatePhoto };
+export { generatePhotos };
