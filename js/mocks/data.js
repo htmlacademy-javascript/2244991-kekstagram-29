@@ -3,7 +3,6 @@ import { generateRandomNumber, getRandomElementFromArray } from './util.js';
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
 const COMMENT_COUNT = 30;
-const PICTURES_COUNT = 25;
 const AVATAR_COUNT = 6;
 
 const MESSAGES = [
@@ -75,8 +74,8 @@ const generatePhoto = function (index) { //генерируем уникальн
  * @param {number} count количество фотографий, которые нужно сгенерировать
  * @return {Array} массив объектов фотографий
  */
-const generatePhotos = () =>Array.from(
-  { length: PICTURES_COUNT },
+const generatePhotos = (count) => Array.from(
+  { length: count },
   (_, pictureIndex) => generatePhoto(pictureIndex + 1));
 
 export { generatePhotos };
