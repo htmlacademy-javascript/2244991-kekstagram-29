@@ -4,7 +4,7 @@ const commentListElement = bigPictureElement.querySelector('.social__comment');/
 const commentLoaderElement = bigPictureElement.querySelector('.comments-loader'); //кнопка загрузить комментарии
 const bodyElement = document.querySelector('body');
 const cancelDuttonElement = bigPictureElement.querySelector('.big-picture__cancel');//кнопка закрыть комментарии
-const commentElement = document.querySelector('.social__comments').document.querySelector('.social__comment');//нет шаблона
+const commentElement = document.querySelector('.social__comments').querySelector('.social__comment');//нет шаблона
 
 /**
  * Функция по отрисовке одного комментария
