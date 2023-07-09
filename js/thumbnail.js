@@ -8,13 +8,19 @@ const container = document.querySelector('.pictures'); //находим конт
  * @returns {Element} thumbnail, заполненный данными
  */
 
-const createthumbnailTemplate = ({ comments, discription, likes, url }) => { //добавляем параметры объекта, которые понадобятся для отрисовки фото с помощью деструктуризации
+const createthumbnailTemplate = ({ comments, discription, likes, url, id }) => { //добавляем параметры объекта, которые понадобятся для отрисовки фото с помощью деструктуризации
   const thumbnail = thumbnailTemplate.cloneNode(true); // клонируем шаблон фотографии, укказываем true чтобы скопировались все элементы
 
-  thumbnail.querySelector('.picture__img').src = url; //добавляем ссылку на фото
-  thumbnail.querySelector('.picture__img').alt = discription; //описание фотографии
-  thumbnail.querySelector('.picture__likes').textContent = likes; // количество лайков
-  thumbnail.querySelector('.picture__comments').textContent = comments.length; //количество комментариев, содержимое поля length, длину массива
+  const imageThumbnail = thumbnail.querySelector('.picture__img'); //выносим поиск querySelector в константы
+  const likesThumbnail = thumbnail.querySelector('.picture__likes');
+  const commentsThumbnail = thumbnail.querySelector('.picture__comments');
+
+
+  imageThumbnail.src = url; //добавляем ссылку на фото
+  imageThumbnail.alt = discription; //описание фотографии
+  likesThumbnail.textContent = likes; // количество лайков
+  commentsThumbnail.textContent = comments.length; //количество комментариев, содержимое поля length, длину массива
+  thumbnail.dataset.thumbnailId = id;//добвляем  id чтобы мы погли связать миниатюру фото с большой фотографией
 
   return(thumbnail);
 };
