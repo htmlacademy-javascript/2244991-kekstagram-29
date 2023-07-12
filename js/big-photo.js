@@ -1,10 +1,10 @@
 const bigPictureElement = document.querySelector('.big-picture'); //модальное окно
-const commentCountElement = bigPictureElement.querySelector('.social__comment-count');//список комментариев
-const commentListElement = bigPictureElement.querySelector('.social__comment');//один комментарий
+const commentCountElement = bigPictureElement.querySelector('.social__comment-count');//элемент для вывода информации и количества комментариев
+const commentListElement = bigPictureElement.querySelector('.social__comments');//список комментариев
 const commentLoaderElement = bigPictureElement.querySelector('.comments-loader'); //кнопка загрузить комментарии
 const bodyElement = document.querySelector('body');
 const cancelDuttonElement = bigPictureElement.querySelector('.big-picture__cancel');//кнопка закрыть комментарии
-const commentElement = document.querySelector('.social__comments').querySelector('.social__comment');//нет шаблона
+const commentElement = commentListElement.querySelector('.social__comment');//один комментарий
 
 /**
  * Функция по отрисовке одного комментария
@@ -26,15 +26,14 @@ const createComment = ({ avatar, name, message }) => {
  * @param {array} comments массив с комментариями
  */
 const renderComments = (comments) => {
-  commentListElement.innerHTML = '';
-
-  const fragment = document.createDocumentFragment();
-  comments.array.forEach((item) => {
+  //inerHTML был тут
+  const fragment = document.createDocumentFragment(); //создаем фрагмент
+  comments.forEach((item) => { //проходимся методом foreach и наполняем элементами
     const comment = createComment(item);
-    fragment.append(comment);
+    fragment.append(comment); //добавляем элемент в фрагмент
   });
-
-  commentCountElement.append(fragment);
+  commentListElement.innerHTML = ''; //очищаем список элементов
+  commentListElement.append(fragment); // добавляем фрагмент в ДОМ
 };
 
 /**
@@ -42,7 +41,7 @@ const renderComments = (comments) => {
  */
 const hideBigPicture = () => {
   bigPictureElement.classList.add('hidden'); // скрываем окно
-  bodyElement.classList.remove('modal-open'); // включаем склолл
+  bodyElement.classList.remove('modal-open'); // включаем скролл
   document.removeEventListener('keydown', onDocumentKeydown);//обработчик событий при нажатии на клавишу
 };
 
@@ -82,8 +81,6 @@ const renderPictureDetail = ({ url, likes, description }) => {
 const showBigPictures = (data) => {
   bigPictureElement.classList.remove('hidden'); //открыть модальное окно
   bodyElement.classList.add('modal-open'); //отключаем скролл под модальным окном
-  commentLoaderElement.classList.add('hidden');
-  commentCountElement.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown); //добавляем обработчик события при нажатии на клавишу
 
   renderPictureDetail(data);
@@ -94,31 +91,3 @@ const showBigPictures = (data) => {
 cancelDuttonElement.addEventListener('click', onCancelButtonClick);
 
 export { showBigPictures };
-
-// Окно должно открываться при клике на миниатюру. Данные для окна (изображение, комментарии, лайки и так далее) берите из того же объекта, который использовался для отрисовки соответствующей миниатюры.
-
-// Для отображения окна нужно удалять класс hidden у элемента .big-picture и каждый раз заполнять его данными о конкретной фотографии:
-
-// Адрес изображения url подставьте как src изображения внутри блока .big-picture__img.
-
-// Количество лайков likes подставьте как текстовое содержание элемента .likes-count.
-
-// Количество комментариев comments подставьте как текстовое содержание элемента .comments-count.
-
-// Список комментариев под фотографией: комментарии должны вставляться в блок .social__comments. Разметка каждого комментария должна выглядеть так:
-
-// <li class="social__comment">
-//     <img
-//         class="social__picture"
-//         src="{{аватар}}"
-//         alt="{{имя комментатора}}"
-//         width="35" height="35">
-//     <p class="social__text">{{текст комментария}}</p>
-// </li>
-// Описание фотографии description вставьте строкой в блок .social__caption.
-
-// После открытия окна спрячьте блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .comments-loader, добавив им класс hidden, с ними мы разберёмся позже, в другом домашнем задании.
-
-// После открытия окна добавьте тегу <body> класс modal-open, чтобы контейнер с фотографиями позади не прокручивался при скролле. При закрытии окна не забудьте удалить этот класс.
-
-// Напишите код для закрытия окна по нажатию клавиши Esc и клике по иконке закрытия.

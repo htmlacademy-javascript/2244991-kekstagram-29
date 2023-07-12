@@ -41,3 +41,4 @@ const renderTumbnails = (pictures) => {
 };
 
 export { renderTumbnails };
+
