@@ -2,7 +2,7 @@ const COMMENT_PER_PORTION = 5;
 
 const bigPictureElement = document.querySelector('.big-picture'); //модальное окно
 const commentCountElement = bigPictureElement.querySelector('.comments-count');//количество комментариев
-const commentShowCountElement = bigPictureElement.querySelector('.social__comments-count');//элемент для вывода информации и количества комментариев
+const commentShowCountElement = bigPictureElement.querySelector('.social__comment-count');//элемент для вывода информации и количества комментариев
 const commentListElement = bigPictureElement.querySelector('.social__comments');//список комментариев
 const commentLoaderElement = bigPictureElement.querySelector('.comments-loader'); //кнопка загрузить комментарии
 const bodyElement = document.querySelector('body');
@@ -20,8 +20,8 @@ let comments = [];
 const createComment = ({ avatar, name, message }) => {
   const comment = commentElement.cloneNode(true);
 
-  comment.querySelector('.social__picture img').src = avatar;
-  comment.querySelector('.social__picture img').alt = name;
+  comment.querySelector('.social__picture').src = avatar;
+  comment.querySelector('.social__picture').alt = name;
   comment.querySelector('.social__text').textContent = message;
 
   return comment;
