@@ -1,7 +1,6 @@
 const COMMENT_PER_PORTION = 5;
 
 const bigPictureElement = document.querySelector('.big-picture'); //модальное окно
-const commentCountElement = bigPictureElement.querySelector('.comments-count');//количество комментариев
 const commentShowCountElement = bigPictureElement.querySelector('.social__comment-count');//элемент для вывода информации и количества комментариев
 const commentListElement = bigPictureElement.querySelector('.social__comments');//список комментариев
 const commentLoaderElement = bigPictureElement.querySelector('.comments-loader'); //кнопка загрузить комментарии
@@ -11,6 +10,13 @@ const commentElement = commentListElement.querySelector('.social__comment');//о
 
 let commentsShown = 0;
 let comments = [];
+
+/**
+ * функция по созданию живой строки
+ */
+const fillCommentsCounter = () => {
+  commentShowCountElement.innerHTML = `${commentsShown} из <span class="comment-count">${comments.length}</span> комментариев`;
+};
 
 /**
  * Функция по отрисовке одного комментария
@@ -31,7 +37,7 @@ const createComment = ({ avatar, name, message }) => {
  * функция по отрисовке комментариев
  * @param {array} массив с комментариями
  */
-const renderComments = (comments) => {
+const renderComments = () => {
   commentsShown += COMMENT_PER_PORTION; //переменная показывает сколько комментариев показано и меняется кратно COMMENT_PER_PORTION
 
   if (commentsShown >= comments.length) {
@@ -50,8 +56,9 @@ const renderComments = (comments) => {
   commentListElement.innerHTML = ''; //очищаем список элементов
   commentListElement.append(fragment); // добавляем фрагмент в ДОМ
   commentShowCountElement.textContent = commentsShown;//
-  commentCountElement.textContent = comments.length;//указываем количество показанных комментариев
+  fillCommentsCounter(comments);//указываем количество показанных комментариев
 };
+
 
 /**
  * функция закрытия модального окна
@@ -78,7 +85,7 @@ function onDocumentKeydown(evt) {
  *функция для запуска renderComments по параметрам
  * @returns
  */
-const onCommentsLoaderClick = () => renderComments();
+const onCommentsLoaderClick = () => renderComments(comments);//нужно передать сюда комментарии
 
 /**
  * функция закрытия модального окна с помощью клавиатуры
@@ -103,12 +110,13 @@ const renderPictureDetail = ({ url, likes, description }) => {
  * @param {object} dataPicture
  */
 const showBigPicture = (dataPicture) => {
+  comments = dataPicture.comments;
   bigPictureElement.classList.remove('hidden'); //открыть модальное окно
   bodyElement.classList.add('modal-open'); //отключаем скролл под модальным окном
   document.addEventListener('keydown', onDocumentKeydown); //добавляем обработчик события при нажатии на клавишу
 
   renderPictureDetail(dataPicture);
-  renderComments(dataPicture.comments);
+  renderComments();
 
 };
 
