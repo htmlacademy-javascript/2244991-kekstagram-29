@@ -24,6 +24,10 @@ const pristine = new Pristine(form, {
   errorTextClass: 'form__error',
 });
 
+/**
+ * функция находит элемент в фокусе
+ * @return {boolean} - true если попадает в фокус
+ */
 const isTextFieldFocused = () =>
   document.activeElement === hashtagField || document.activeElement === commentField;
 
@@ -64,6 +68,11 @@ function hideModal () {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
+/**
+ * Функция по определению хэштега
+ * @param {string} tagString
+ * @returns {string} обрезаем пробелы, # отсоединяем по пробелу, массив с эл прошедшими проверку
+ */
 const normalizeTags = (tagString) => tagString
   .trim()
   .split(' ')
@@ -71,10 +80,11 @@ const normalizeTags = (tagString) => tagString
 
 /**
  * функция проверяет валидность хештега, соответствует ли он условиям
- * @param {string} value
- * @returns
+ * @param {string} value текущее значение
+ * перебираем массив на заданные условия, возвращаем true или false
+ * .match() возвращает получившиеся совпадения при сопоставлении строки с регулярным выражением
  */
-const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag)); //методом test хэштеги на соотвествие регулярному выражению, и мето  умукн возвращает booley
+const hasValidTags = (value) => normalizeTags(value).every((tag) => (tag.match(VALID_SYMBOLS)));
 
 /**
  * функция проверяет максимальное количестсво хэштегов
@@ -89,7 +99,7 @@ const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTEG_COUN
  * @returns
  */
 const hasUniqueTags = (value) => {
-  const lowerCaseTags = normalizeTags(value).map((tag) => tag.tolowerCase());//приводим хэштеги к одному регистру
+  const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());//приводим хэштеги к одному регистру
   return lowerCaseTags.length === new Set(lowerCaseTags).size; // сравниваем длину массива с коллекцией set, в которой указан sise - размер коллекции. если совпадают то коллекция уникальна
 };
 
@@ -111,7 +121,7 @@ const onCancelButtonClick = () => hideModal();
 const onFileInputChange = () => showModal();
 
 
-const onformSubmit = (evt) => {
+const onFormSubmit = (evt) => {
   evt.preventDefault();
   pristine.validate();
 };
@@ -145,7 +155,7 @@ const imageFormUpload = () => {
   canselButton.addEventListener('click', onCancelButtonClick);
   hashtagField.addEventListener('keydown', onInputKeyDown);
   commentField.addEventListener('keydown', onInputKeyDown);
-  form.addEventListener('submit', onformSubmit);
+  form.addEventListener('submit', onFormSubmit);
 
   // initScaler();
   // initEffect();

@@ -1,4 +1,4 @@
-import { generateRandomNumber, getRandomElementFromArray } from './util.js';
+import { generateRandomNumber, getRandomElementFromArray, createUniqueRandomIdGenerator } from './util.js';
 
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
@@ -39,8 +39,8 @@ const DISCRIPTIONS = [
  * функция по генерации одного комментария
  * @return {object} объект комментария
  */
-const generateComment = (index) => ({
-  id: index, //генерируем уникальные id
+const generateComment = () => ({
+  id: createUniqueRandomIdGenerator(1, COMMENT_COUNT), //генерируем уникальные id
   avatar: `img/avatar-${generateRandomNumber(1, AVATAR_COUNT)}.svg`,
   message: getRandomElementFromArray(MESSAGES),//фукнция берет массив сообщений и случайным образом выбирает элемент массива
   name: getRandomElementFromArray(NAMES),//фукнция берет массив имен и случайным образом выбирает элемент массива
@@ -52,7 +52,7 @@ const generateComment = (index) => ({
  * @return {Array} массив объектов комментариев
  */
 const generateComments = () => Array.from(
-  { length: COMMENT_COUNT },
+  { length: generateRandomNumber(0, COMMENT_COUNT) },
   (_, pictureIndex) => generateComment(pictureIndex + 1));
 
 /**
@@ -65,7 +65,7 @@ const generatePhoto = function (index) { //генерируем уникальн
     url: `photos/${index}.jpg`,
     discription: getRandomElementFromArray(DISCRIPTIONS),
     likes: generateRandomNumber(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
-    comments: generateComments(generateRandomNumber(1, COMMENT_COUNT)),
+    comments: generateComments(createUniqueRandomIdGenerator(1, COMMENT_COUNT)),
   };
 };
 
