@@ -1,4 +1,3 @@
-
 /**
  * функция по генерации случайного числа
  * @param {number} start с какого числа начинаем генерацию чистел
@@ -8,6 +7,28 @@
 const generateRandomNumber = (start, end) => {
   const randomNumber = Math.floor(Math.random() * (end - start + 1)) + start;
   return randomNumber;
+};
+
+/**
+ * функция по генерации уникального id
+ * @param {number} min минимальное значение
+ * @param {number} max максимальное значение
+ * @returns уникальный id
+ */
+const createUniqueRandomIdGenerator = (min, max) => {
+  const generatedValues = [];
+
+  return function () {
+    let currentValue = generateRandomNumber(min, max);
+    if (generatedValues.length >= (max - min + 1)) {
+      throw new Error(`Перебраны все числа из диапазона от ${min} до ${max}`);
+    }
+    while (generatedValues.includes(currentValue)) {
+      currentValue = generateRandomNumber(min, max);
+    }
+    generatedValues.push(currentValue);
+    return currentValue;
+  };
 };
 
 /**
@@ -21,4 +42,4 @@ const getRandomElementFromArray = (arr) => {
   return arr[randomIndex];
 };
 
-export { generateRandomNumber, getRandomElementFromArray };
+export { generateRandomNumber, getRandomElementFromArray, createUniqueRandomIdGenerator};
