@@ -1,3 +1,6 @@
+import { initScale, resetScale } from './scale.js';
+import { initEffect, resetEffect, hideSlider } from './effect.js';
+
 const MAX_HASHTEG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
@@ -52,6 +55,7 @@ const showModal = () => {
   body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
+  hideSlider();
 };
 
 /**
@@ -59,8 +63,8 @@ const showModal = () => {
  */
 function hideModal () {
   form.reset(); //очищаем форму
-  // resetScale();
-  // resetEffect();
+  resetScale();
+  resetEffect();
   pristine.reset(); //сброс ошибок pristine
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -157,8 +161,8 @@ const imageFormUpload = () => {
   commentField.addEventListener('keydown', onInputKeyDown);
   form.addEventListener('submit', onFormSubmit);
 
-  // initScaler();
-  // initEffect();
+  initScale();
+  initEffect();
 };
 
 export { imageFormUpload };
