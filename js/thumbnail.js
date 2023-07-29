@@ -1,3 +1,5 @@
+import { showBigPicture} from './big-photo.js';
+
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 //находим шаблон по идентификатору #picture и обращаемся к шаблону .picture в index.html
 const container = document.querySelector('.pictures'); //находим контейнер, куда будет добавлять изображения
@@ -22,6 +24,9 @@ const createthumbnailTemplate = ({ comments, discription, likes, url, id }) => {
   commentsThumbnail.textContent = comments.length; //количество комментариев, содержимое поля length, длину массива
   thumbnail.dataset.thumbnailId = id;//добвляем  id чтобы мы погли связать миниатюру фото с большой фотографией
 
+  imageThumbnail.addEventListener('click', () => { //создаем замыкание
+    showBigPicture({ comments, discription, likes, url });
+  });
   return(thumbnail);
 };
 
@@ -38,6 +43,7 @@ const renderTumbnails = (pictures) => {
     fragment.append(thumbnail); //все созданные элементы добавляем в контейнер fragment
   });
   container.append(fragment); // разово добавляем fragment в DOM, не перерисовывая его
+
 };
 
 export { renderTumbnails };

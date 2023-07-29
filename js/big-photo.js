@@ -85,7 +85,7 @@ function onDocumentKeydown(evt) {
  *функция для запуска renderComments по параметрам
  * @returns
  */
-const onCommentsLoaderClick = () => renderComments(comments);//нужно передать сюда комментарии
+const onCommentsLoaderClick = () => renderComments(comments);
 
 /**
  * функция закрытия модального окна с помощью клавиатуры
