@@ -1,11 +1,26 @@
-import { generatePhotos } from './mocks/data.js';
 import { renderTumbnails } from './thumbnail.js';
-import { renderGallery } from './gallery.js';
-import { imageFormUpload } from './form.js';
+import { imageFormUpload, hideModal, setOnFormSubmit } from './form.js';
+import { getData, sendData } from './api.js';
+import { showAlert } from './alert.js';
+import { showSuccessMessage, showErrorMessage } from './messaje.js';
 
-const PICTURES_COUNT = 25;
-
-const photosData = generatePhotos(PICTURES_COUNT);// Генерируем массив из 25 фотографий с помощью функции генерации массива
-renderTumbnails(photosData);//генерируем миниатюры фотографий
-renderGallery(photosData);//генерируем галерею фотографий
 imageFormUpload();//открываем окно с формой загрузки фото
+
+
+//отправка формы
+setOnFormSubmit(async (data) =>{
+  try {
+    await sendData(data); //отправляем данные
+    hideModal(); //закрываем окно
+    showSuccessMessage(); //сообщение об успехе
+  } catch {
+    showErrorMessage(); //сообщение об неудаче
+  }
+});
+
+try {
+  const data = await getData(); //получаем данные
+  renderTumbnails(data); //отрисовываем полученные данные
+} catch (error) {
+  showAlert(error.message); //вывод ошибки
+}

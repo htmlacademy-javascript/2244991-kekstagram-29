@@ -9,13 +9,19 @@ const ErrorText = {
   INVALID_PATTERN: 'Неправильный хэштег',
 };
 
+const SubmitButtonText = { //текст на кнопке отправить
+  UNBLOCK: 'Сохранить',
+  BLOCK: 'Сохраняю...'
+};
+
 const body = document.querySelector('body');
-const form = document.querySelector('.img-upload__form');
-const overlay = form.querySelector('.img-upload__overlay');
-const fileField = form.querySelector('.img-upload__input');
+const form = document.querySelector('.img-upload__form');//форма загрузки
+const overlay = form.querySelector('.img-upload__overlay');//подложка
+const fileField = form.querySelector('.img-upload__input');//контрол загрузки файла
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
-const canselButton = document.querySelector('.img-upload__cancel');
+const canselButton = document.querySelector('.img-upload__cancel');//кнопка закрыть
+const submitButton = form.querySelector('.img-upload__submit'); //кнопка отправить
 
 /**
  * подключаем Pristine
@@ -165,5 +171,40 @@ const imageFormUpload = () => {
   initEffect();
 };
 
-export { imageFormUpload };
+/**
+ * функция по блокировке кнопки отправить
+ */
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.BLOCK;
+};
+
+/**
+ * функция по разблокировки кнопки отправить
+ */
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.UNBLOCK;
+};
+
+
+/**
+ * отправка формы
+ * @param {object} cb данные из формы
+ */
+const setOnFormSubmit = (cb) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
+};
+
+export { imageFormUpload, hideModal, setOnFormSubmit };
+
 
