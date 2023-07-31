@@ -1,3 +1,5 @@
+import { isEscapeKey } from './util.js';
+
 const COMMENT_PER_PORTION = 5;
 
 const bigPictureElement = document.querySelector('.big-picture'); //модальное окно
@@ -75,7 +77,7 @@ const hideBigPicture = () => {
  * @param {object} evt объект события
  */
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideBigPicture();
   }
@@ -99,10 +101,11 @@ const onCancelButtonClick = () => {
  * @param {object} url, likes, description
  */
 const renderPictureDetail = ({ url, likes, description }) => {
-  bigPictureElement.querySelector('.big-picture__img img').src = url;
-  bigPictureElement.querySelector('.big-picture__img img').alt = description;
-  bigPictureElement.querySelector('.likes-count').textContent = likes;
-  bigPictureElement.querySelector('.social__caption').textContent = description;
+  const bigPhoto = bigPictureElement.querySelector('.big-picture__img img');
+  bigPhoto.src = url;//адрес изображения
+  bigPhoto.alt = description;//описание фото
+  bigPictureElement.querySelector('.likes-count').textContent = likes;//лайки
+  bigPictureElement.querySelector('.social__caption').textContent = description; //описание фото
 };
 
 /**
@@ -116,8 +119,7 @@ const showBigPicture = (dataPicture) => {
   document.addEventListener('keydown', onDocumentKeydown); //добавляем обработчик события при нажатии на клавишу
 
   renderPictureDetail(dataPicture);
-  renderComments();
-
+  renderComments(dataPicture.comments);
 };
 
 cancelButtonElement.addEventListener('click', onCancelButtonClick);

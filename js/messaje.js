@@ -1,3 +1,5 @@
+import { isEscapeKey } from './util.js';
+
 const errorMessage = document.querySelector('#error').content.querySelector('.error'); //cообщение с ошибкой загрузки изображения
 const successMessage = document.querySelector('#success').content.querySelector('.success'); //cообщение об успешной загрузке изображения
 
@@ -11,7 +13,7 @@ const typeMessage = () => document.querySelector('.error, .success');
  * @param {object} evt объект события
  */
 const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeMessage();
   }
