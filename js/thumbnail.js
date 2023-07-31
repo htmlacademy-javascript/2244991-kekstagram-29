@@ -10,7 +10,7 @@ const container = document.querySelector('.pictures'); //находим конт
  * @returns {Element} thumbnail, заполненный данными
  */
 
-const createthumbnailTemplate = ({ comments, discription, likes, url, id }) => { //добавляем параметры объекта, которые понадобятся для отрисовки фото с помощью деструктуризации
+const createthumbnailTemplate = ({ comments, description, likes, url, }) => { //добавляем параметры объекта, которые понадобятся для отрисовки фото с помощью деструктуризации
   const thumbnail = thumbnailTemplate.cloneNode(true); // клонируем шаблон фотографии, укказываем true чтобы скопировались все элементы
 
   const imageThumbnail = thumbnail.querySelector('.picture__img'); //выносим поиск querySelector в константы
@@ -19,13 +19,12 @@ const createthumbnailTemplate = ({ comments, discription, likes, url, id }) => {
 
 
   imageThumbnail.src = url; //добавляем ссылку на фото
-  imageThumbnail.alt = discription; //описание фотографии
+  imageThumbnail.alt = description; //описание фотографии
   likesThumbnail.textContent = likes; // количество лайков
   commentsThumbnail.textContent = comments.length; //количество комментариев, содержимое поля length, длину массива
-  thumbnail.dataset.thumbnailId = id;//добвляем  id чтобы мы погли связать миниатюру фото с большой фотографией
 
   imageThumbnail.addEventListener('click', () => { //создаем замыкание
-    showBigPicture({ comments, discription, likes, url });
+    showBigPicture({ comments, description, likes, url });
   });
   return(thumbnail);
 };
@@ -37,6 +36,7 @@ const createthumbnailTemplate = ({ comments, discription, likes, url, id }) => {
  */
 
 const renderTumbnails = (pictures) => {
+  container.querySelectorAll('.picture').forEach((element) => element.remove()); //удаление перересованных миниатюр для сортировки
   const fragment = document.createDocumentFragment(); // создаем контейнер
   pictures.forEach((picture) => { //с помощью метода forEach вызывается функция callBack createthumbnailTemplate
     const thumbnail = createthumbnailTemplate(picture); //функция вызывается для каждого элемента массива и заполняет данными

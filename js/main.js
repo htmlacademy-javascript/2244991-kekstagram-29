@@ -3,6 +3,8 @@ import { imageFormUpload, hideModal, setOnFormSubmit } from './form.js';
 import { getData, sendData } from './api.js';
 import { showAlert } from './alert.js';
 import { showSuccessMessage, showErrorMessage } from './messaje.js';
+import { showingFilteredPhotos } from './filter-photos.js';
+import { debounce } from './util.js';
 
 imageFormUpload();//открываем окно с формой загрузки фото
 
@@ -20,7 +22,9 @@ setOnFormSubmit(async (data) =>{
 
 try {
   const data = await getData(); //получаем данные
-  renderTumbnails(data); //отрисовываем полученные данные
+  const debouncedRenderThumbnails = debounce(renderTumbnails);
+  renderTumbnails(data); // отрисовываем полученные данные при первоночальной загрузке
+  showingFilteredPhotos(data, debouncedRenderThumbnails);//сортируем и отрисовываем полученные данные
 } catch (error) {
   showAlert(error.message); //вывод ошибки
 }
