@@ -10,7 +10,7 @@ const container = document.querySelector('.pictures'); //находим конт
  * @returns {Element} thumbnail, заполненный данными
  */
 
-const createthumbnailTemplate = ({ comments, discription, likes, url, }) => { //добавляем параметры объекта, которые понадобятся для отрисовки фото с помощью деструктуризации
+const createthumbnailTemplate = ({ comments, description, likes, url, }) => { //добавляем параметры объекта, которые понадобятся для отрисовки фото с помощью деструктуризации
   const thumbnail = thumbnailTemplate.cloneNode(true); // клонируем шаблон фотографии, укказываем true чтобы скопировались все элементы
 
   const imageThumbnail = thumbnail.querySelector('.picture__img'); //выносим поиск querySelector в константы
@@ -19,12 +19,12 @@ const createthumbnailTemplate = ({ comments, discription, likes, url, }) => { //
 
 
   imageThumbnail.src = url; //добавляем ссылку на фото
-  imageThumbnail.alt = discription; //описание фотографии
+  imageThumbnail.alt = description; //описание фотографии
   likesThumbnail.textContent = likes; // количество лайков
   commentsThumbnail.textContent = comments.length; //количество комментариев, содержимое поля length, длину массива
 
   imageThumbnail.addEventListener('click', () => { //создаем замыкание
-    showBigPicture({ comments, discription, likes, url });
+    showBigPicture({ comments, description, likes, url });
   });
   return(thumbnail);
 };
